@@ -2,4 +2,4 @@
 
 ## 接口结构参考
 
-[index.js](/src/mock/mock.js)
+[index.js](/src/mock/index.js)
