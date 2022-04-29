@@ -14,20 +14,46 @@ class Login extends React.Component {
       password: '',
     };
   }
+
   handleSubmit = (content) => {
     axios
       .post('/api/login', {
         name: this.state.username,
         password: this.state.password,
       })
-      .catch(() => {
+      .then((resp) => {
+        if (resp.data.code === 0) {
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 500);
+        } else {
+          alert('login error: ' + resp.data.message);
+        }
+      })
+      .catch((resp) => {
+        debugger;
+        console.log(resp);
         alert('login error');
       });
   };
 
   handleReset = (content) => {
-    console.log(content.target, this.state);
-    this.setState({ username: '', password: '' });
+    axios
+      .post('/api/register', {
+        name: this.state.username,
+        password: this.state.password,
+      })
+      .then((resp) => {
+        if (resp.data.code === 0) {
+          alert('register success');
+        } else {
+          alert('register error: ' + resp.data.message);
+        }
+      })
+      .catch((resp) => {
+        console.log(resp);
+        alert('register error');
+      });
   };
 
   getStyle = () => {
@@ -94,11 +120,14 @@ class Login extends React.Component {
                   onClick={(event) => this.handleSubmit(event)}
                 />
                 <RaisedButton
-                  label="Reset"
+                  label="Register"
                   primary={true}
                   style={style}
                   onClick={(event) => this.handleReset(event)}
                 />
+                {/* <Link></Link> */}
+                {/* <Link></Link> */}
+                {/* <Link></Link> */}
               </div>
             </div>
           </div>

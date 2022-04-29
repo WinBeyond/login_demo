@@ -30,7 +30,7 @@ class App extends Component {
 
   render() {
     if (this.state.userInfo) {
-      return <Home></Home>;
+      return <Home userInfo={this.state.userInfo}></Home>;
     } else {
       return <Login></Login>;
     }

@@ -17,34 +17,44 @@ mock.onGet('/api/get_user').reply(200, {
 });
 
 // 注册
-mock.onPost('/api/register', { name: 'xxx', password: 'xxx' }).reply(200, {
-  code: 0,
-  message: 'success',
+// req:  { name: 'xxx', password: 'xxx' }
+// mock.onPost('/api/register').reply(200, {
+//   code: 0,
+//   message: 'success',
+//   data: null,
+// });
+mock.onPost('/api/register').reply(200, {
+  code: -1,
+  message: 'xxxx',
   data: null,
 });
 
 // 后端设置cookie
-mock.onPost('/api/login', { name: 'xxx', password: 'xxx' }).reply(200, {
-  code: 0,
-  message: 'success',
+// req:  { name: 'xxx', password: 'xxx' }
+// mock.onPost('/api/login').reply(200, {
+//   code: 0,
+//   message: 'success',
+//   data: null,
+// });
+mock.onPost('/api/login').reply(200, {
+  code: -1,
+  message: 'password wrong',
   data: null,
 });
 
-mock.onPost('/api/list_dbuser', {}).reply(200, {
+mock.onPost('/api/list_user').reply(200, {
   code: 0,
   message: 'success',
   data: [
     {
       name: 'xxxx2',
       xxxx: 'xxxxx',
-      xxxx: 'xxxx',
-      dbname: 'xxxx',
+      xxx: 'xxxx',
     },
     {
       name: 'xxxx1',
       xxxx: 'xxxxx',
-      xxxx: 'xxxx',
-      dbname: 'xxxx',
+      xxx: 'xxxx',
     },
   ],
 });

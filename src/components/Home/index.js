@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,9 +14,10 @@ import React, { useEffect, useState } from 'react';
 function Home(props) {
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
+  const { userInfo } = props;
 
   useEffect(() => {
-    axios.post('/api/list_dbuser', {}).then((resp) => {
+    axios.post('/api/list_user', {}).then((resp) => {
       console.log(Object.keys(resp.data.data[0]));
       if (resp.data.code === 0 && resp.data.data.length > 0) {
         setRows(resp.data.data);
@@ -26,7 +28,6 @@ function Home(props) {
 
   useEffect(() => {
     console.log(headers);
-    // debugger;
   }, [headers]);
 
   const getHeaders = () => {
@@ -66,7 +67,9 @@ function Home(props) {
     <div>
       <MuiThemeProvider>
         <div>
-          <AppBar title="DBUsers" />
+          <AppBar title="Registered Users">
+            <Button color="inherit">{userInfo?.name}</Button>
+          </AppBar>
 
           <TableContainer component={Paper}>
             <Table
