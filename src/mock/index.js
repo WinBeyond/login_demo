@@ -16,8 +16,15 @@ mock.onGet('/api/get_user').reply(200, {
   },
 });
 
+// 注册
+mock.onPost('/api/register', { naeme: 'xxx', password: 'xxx' }).reply(200, {
+  code: 0,
+  message: 'success',
+  data: null,
+});
+
 // 后端设置cookie
-mock.onPost('/api/login').reply(200, {
+mock.onPost('/api/login', { naeme: 'xxx', password: 'xxx' }).reply(200, {
   code: 0,
   message: 'success',
   data: null,
