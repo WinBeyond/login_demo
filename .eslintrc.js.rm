@@ -1,0 +1,3 @@
+module.exports = {
+    // ignorePatterns: ["dist/**", ".eslintrc.js", "webpack.config.js", "webpack.vsce.config.js", "*.json"]
+};

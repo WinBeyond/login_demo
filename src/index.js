@@ -1,57 +1,65 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+// import { message } from 'antd-message';
+import axios from 'axios';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Home from './components/Home';
+import Login from './components/Login';
 
-import Login from "./components/Login";
-import Result from "./Result";
+if (process.env.NODE_ENV !== 'production') {
+  require('./mock');
+}
 
 class App extends Component {
   state = {
     results: [],
     disableLocal: false,
-    disableRegister: false
+    disableRegister: false,
+    userInfo: null,
   };
 
-  render() {
-    return (
-      <div>
-        <Login />
-
-        {this.state.results.map(r => (
-          <Result key={r} message={r} />
-        ))}
-
-      </div>
-    );
+  componentDidMount() {
+    axios
+      .get('/api/get_user')
+      .then((resp) => {
+        if (resp.data.code === 0) {
+          this.setState({ userInfo: resp.data.data });
+        }
+      })
+      .catch((resp) => {});
   }
 
-  handleLogin = content => {
+  render() {
+    if (this.state.userInfo) {
+      return <Home></Home>;
+    } else {
+      return <Login></Login>;
+    }
+  }
+
+  handleLogin = (content) => {
     this.addResult(`Logging in with ${JSON.stringify(content)}`);
   };
-  handleLoginWithProvider = provider => {
+  handleLoginWithProvider = (provider) => {
     this.addResult(`Logging in with provider=${provider}`);
   };
-  handleRegister = content => {
+  handleRegister = (content) => {
     this.addResult(`Registering with ${JSON.stringify(content)}`);
   };
-  handleRegisterWithProvider = provider => {
+  handleRegisterWithProvider = (provider) => {
     this.addResult(`Registering with provider=${provider}`);
   };
 
-  handleChange = name => event => {
+  handleChange = (name) => (event) => {
     this.setState({ [name]: event.target.checked });
   };
 
-  addResult = msg => {
-    this.setState(prevState => {
+  addResult = (msg) => {
+    this.setState((prevState) => {
       return {
-        results: [...prevState.results, msg]
+        results: [...prevState.results, msg],
       };
     });
   };
 }
 
-render(<App />, document.getElementById("root"));
+render(<App />, document.getElementById('root'));

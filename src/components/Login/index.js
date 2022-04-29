@@ -1,55 +1,63 @@
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import AppBar from "material-ui/AppBar";
-import RaisedButton from "material-ui/RaisedButton";
-import TextField from "material-ui/TextField";
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import TextField from 'material-ui/TextField';
+import React from 'react';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: ""
+      username: '',
+      password: '',
     };
   }
-  handleSubmit = content => {
-    console.log(content.target, this.state);
+  handleSubmit = (content) => {
+    axios
+      .post('/api/login', {
+        name: this.state.username,
+        password: this.state.password,
+      })
+      .catch(() => {
+        alert('login error');
+      });
   };
 
-  handleReset = content => {
+  handleReset = (content) => {
     console.log(content.target, this.state);
-    this.setState({username: '', password: ''})
+    this.setState({ username: '', password: '' });
   };
 
   getStyle = () => {
-    return makeStyles(theme => ({
+    return makeStyles((theme) => ({
       container: {
-        display: "flex",
-        flexWrap: "wrap"
+        display: 'flex',
+        flexWrap: 'wrap',
       },
       textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: 200
-      }
+        width: 200,
+      },
     }));
   };
 
   render() {
     const wrapperStyle = {
-      display: "flex",
-      flexDirection: "column",
-      border: "1px solid black",
+      display: 'flex',
+      flexDirection: 'column',
+      border: '1px solid black',
       padding: 5,
-      alignItems: "center"
+      alignItems: 'center',
     };
 
     const buttonsWrapperStyle = {
-      display: "flex",
-      flexDirection: "row",
+      display: 'flex',
+      flexDirection: 'row',
       padding: 5,
-      alignItems: "center"
+      alignItems: 'center',
     };
     const classes = this.getStyle();
 
@@ -83,13 +91,13 @@ class Login extends React.Component {
                   label="Login"
                   primary={true}
                   style={style}
-                  onClick={event => this.handleSubmit(event)}
+                  onClick={(event) => this.handleSubmit(event)}
                 />
                 <RaisedButton
                   label="Reset"
                   primary={true}
                   style={style}
-                  onClick={event => this.handleReset(event)}
+                  onClick={(event) => this.handleReset(event)}
                 />
               </div>
             </div>
@@ -100,6 +108,6 @@ class Login extends React.Component {
   }
 }
 const style = {
-  margin: 15
+  margin: 15,
 };
 export default Login;
